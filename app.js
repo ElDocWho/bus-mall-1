@@ -1,5 +1,6 @@
 'use strict';
 
+var acumClickedArray = [];
 var productsArray = [];
 var imgPathArray = [];
 var nameArray = [];
@@ -70,22 +71,28 @@ function randomImgGen() {
   prod3.countShown++;
 };
 randomImgGen();
-
+if (localStorage.storageArray) {
+  var newStorageArray = JSON.parse(localStorage.storageArray);
+  for (var i = 0 ; i < newStorageArray.length ; i++){
+    newStorageArray[i].countClicked += productsArray[i].countClicked;
+  }
+}
 function handleClick (){
   randomImgGen();
   totalClicks++;
   var productsArrayIdx = this.alt;
   productsArray[productsArrayIdx].countClicked++;
   if (totalClicks >= 25) {
+    localStorage.storageArray = JSON.stringify(productsArray);
     img1.removeEventListener('click', handleClick);
     img2.removeEventListener('click', handleClick);
     img3.removeEventListener('click', handleClick);
     var picSection = document.getElementById('imagechoices');
     body.removeChild(picSection);
-    countClickedArrayPush();
+    countClickedArrayPush ();
     renderChart();
   }
-};
+}
 img1.addEventListener('click', handleClick);
 img2.addEventListener('click', handleClick);
 img3.addEventListener('click', handleClick);
