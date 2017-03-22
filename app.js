@@ -77,13 +77,22 @@ if (localStorage.storageArray) {
     newStorageArray[i].countClicked += productsArray[i].countClicked;
   }
 }
+if (localStorage.storageArray1) {
+  var newStorageArray1 = JSON.parse(localStorage.storageArray);
+  for (var i = 0 ; i < newStorageArray1.length ; i++){
+    newStorageArray1[i].countShown += productsArray[i].countShown;
+  }
+}
 function handleClick (){
   randomImgGen();
   totalClicks++;
   var productsArrayIdx = this.alt;
   productsArray[productsArrayIdx].countClicked++;
   if (totalClicks >= 25) {
+
     localStorage.storageArray = JSON.stringify(productsArray);
+    localStorage.storageArray1 = JSON.stringify(productsArray);
+
     img1.removeEventListener('click', handleClick);
     img2.removeEventListener('click', handleClick);
     img3.removeEventListener('click', handleClick);
