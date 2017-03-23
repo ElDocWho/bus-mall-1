@@ -9,7 +9,7 @@ function renderChart(){
       labels: nameArray,
       datasets: [{
         label: '# of Votes',
-        data: countClickedArray,
+        data: newStorageArray,
         backgroundColor: [
           'rgba(255,99,132,1)',
           'rgba(54, 162, 235, 1)',

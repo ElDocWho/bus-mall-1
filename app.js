@@ -71,27 +71,12 @@ function randomImgGen() {
   prod3.countShown++;
 };
 randomImgGen();
-if (localStorage.storageArray) {
-  var newStorageArray = JSON.parse(localStorage.storageArray);
-  for (var i = 0 ; i < newStorageArray.length ; i++){
-    newStorageArray[i].countClicked += productsArray[i].countClicked;
-  }
-}
-if (localStorage.storageArray1) {
-  var newStorageArray1 = JSON.parse(localStorage.storageArray);
-  for (var i = 0 ; i < newStorageArray1.length ; i++){
-    newStorageArray1[i].countShown += productsArray[i].countShown;
-  }
-}
 function handleClick (){
   randomImgGen();
   totalClicks++;
   var productsArrayIdx = this.alt;
   productsArray[productsArrayIdx].countClicked++;
   if (totalClicks >= 25) {
-
-    localStorage.storageArray = JSON.stringify(productsArray);
-    localStorage.storageArray1 = JSON.stringify(productsArray);
 
     img1.removeEventListener('click', handleClick);
     img2.removeEventListener('click', handleClick);
@@ -110,5 +95,19 @@ function countClickedArrayPush (){
   for (var i = 0; i < productsArray.length; i++) {
     countClickedArray.push(productsArray[i].countClicked);
     countShownArray.push(productsArray[i].countShown);
+  }
+  if (localStorage.storageArray) {
+    var newStorageArray = JSON.parse(localStorage.storageArray);
+    for (var i = 0 ; i < newStorageArray.length ; i++){
+      newStorageArray[i] += countClickedArray[1];
+    }
+  }
+  if (localStorage.storageArray1) {
+    var newStorageArray1 = JSON.parse(localStorage.storageArray);
+    for (var i = 0 ; i < newStorageArray1.length ; i++){
+      newStorageArray1[i] += countShownArray[1];
+      localStorage.storageArray = JSON.stringify(countClickedArray);
+      localStorage.storageArray1 = JSON.stringify(countShownArray);
+    }
   }
 };
