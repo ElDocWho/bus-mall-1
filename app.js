@@ -1,5 +1,4 @@
 'use strict';
-
 var productsArray = [];
 var imgPathArray = [];
 var nameArray = [];
