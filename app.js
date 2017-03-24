@@ -1,6 +1,7 @@
 'use strict';
 
 var acumClickedArray = [];
+var totalSumClicks = 0;
 var productsArray = [];
 var imgPathArray = [];
 var nameArray = [];
@@ -12,16 +13,6 @@ var img2 = document.getElementById('image2');
 var img3 = document.getElementById('image3');
 var body = document.getElementsByTagName('body')[0];
 var totalClicks = 0;
-
-function Products(name, filePath){
-  this.name = name;
-  this.filePath = filePath;
-  this.countShown = 0;
-  this.countClicked = 0;
-  productsArray.push(this);
-  imgPathArray.push(filePath);
-  nameArray.push(name);
-};
 
 var bag = new Products('bag', 'img/bag.jpg');
 var banana = new Products('banana', 'img/banana.jpg');
@@ -44,6 +35,25 @@ var usb = new Products('usb', 'img/usb.gif');
 var waterCan = new Products('water-can', 'img/water-can.jpg');
 var wineGlass = new Products('wine-glass', 'img/wine-glass.jpg');
 
+///*
+if (localStorage.storageArray) {
+  var existingLSData = JSON.parse(localStorage.storageArray);
+  totalSumClicks += localStorage.totalSumClicksLS;
+  for (var i = 0; i < existingLSData.length; i++) {
+    productsArray[i].countClicked += existingLSData[i].countClicked;
+    productsArray[i].countShown += existingLSData[i].countShown;
+  }
+}
+//*/
+function Products(name, filePath){
+  this.name = name;
+  this.filePath = filePath;
+  this.countShown = 0;
+  this.countClicked = 0;
+  productsArray.push(this);
+  imgPathArray.push(filePath);
+  nameArray.push(name);
+};
 function randomNumGen() {
   return Math.floor(Math.random() * imgPathArray.length);
 };
@@ -69,15 +79,20 @@ function randomImgGen() {
   prod1.countShown++;
   prod2.countShown++;
   prod3.countShown++;
-};
+}
 randomImgGen();
 function handleClick (){
   randomImgGen();
   totalClicks++;
   var productsArrayIdx = this.alt;
   productsArray[productsArrayIdx].countClicked++;
-  if (totalClicks >= 25) {
+  totalSumClicks++;
+  if (totalClicks >= 10) {
+//* New
+    localStorage.storageArray = JSON.stringify(productsArray);
+    localStorage.totalSumClicksLS = totalSumClicks;
 
+ //New*/
     img1.removeEventListener('click', handleClick);
     img2.removeEventListener('click', handleClick);
     img3.removeEventListener('click', handleClick);
@@ -87,6 +102,7 @@ function handleClick (){
     renderChart();
   }
 }
+
 img1.addEventListener('click', handleClick);
 img2.addEventListener('click', handleClick);
 img3.addEventListener('click', handleClick);
@@ -96,7 +112,8 @@ function countClickedArrayPush (){
     countClickedArray.push(productsArray[i].countClicked);
     countShownArray.push(productsArray[i].countShown);
   }
-  if (localStorage.storageArray) {
+}
+/*  if (localStorage.storageArray) {
     var newStorageArray = JSON.parse(localStorage.storageArray);
     for (var i = 0 ; i < newStorageArray.length ; i++){
       newStorageArray[i] += countClickedArray[1];
@@ -111,3 +128,4 @@ function countClickedArrayPush (){
     }
   }
 };
+*/
