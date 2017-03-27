@@ -76,9 +76,13 @@ h2 {
   color: white;
   font-weight: 700;
   border-radius: 8px;
-  transform: rotateZ(-3000deg);
 }
-
+h2 :hover
+{
+        -webkit-transform: rotateZ(-3000deg);
+        -ms-transform: rotateZ(-3000deg);
+        transform: rotateZ(-3000deg);
+}
 #image1 {
   max-width: 30%;
   height: 60%;
