@@ -1,4 +1,4 @@
-'use strict';
+'use strict'; //this is final draft
 
 var ctx = document.getElementById('chart').getContext('2d');
 
